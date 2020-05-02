@@ -6,22 +6,21 @@
         xmlns:local="clr-namespace:StudentInfoSystem"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="573*"/>
             <ColumnDefinition Width="203*"/>
             <ColumnDefinition Width="14*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnHello" Content="Hello" HorizontalAlignment="Left" Margin="239,337,0,0" VerticalAlignment="Top" Width="75" Click="btnHello_Click"/>
         <GroupBox x:Name="gbUser" Header="Лични данни:" HorizontalAlignment="Left" Height="199" Margin="67,117,0,0" VerticalAlignment="Top" Width="269">
-            <TextBox x:Name="lastNameTxt" HorizontalAlignment="Left" Height="26" Margin="57,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="183" TextChanged="TextBox_TextChanged_1"/>
+            <TextBox x:Name="lastNameTxt" HorizontalAlignment="Left" Height="26" Margin="57,88,0,0" VerticalAlignment="Top" Width="183" Text="{Binding CurrentStudent.LastName}" />
         </GroupBox>
         <Label x:Name="lbtext" Content="Име:" HorizontalAlignment="Left" Margin="67,155,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="26" Margin="129,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="26" Margin="129,155,0,0" VerticalAlignment="Top" Width="185" Text="{Binding CurrentStudent.FirstName}"/>
         <Label x:Name="secondName" Content="Презиме:" HorizontalAlignment="Left" Margin="67,189,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lastName" Content="Фамилия:" HorizontalAlignment="Left" Margin="67,215,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.75,-5.037"/>
-        <TextBox x:Name="secondNametxt" HorizontalAlignment="Left" Height="27" Margin="129,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="185"/>
+        <TextBox x:Name="secondNametxt" HorizontalAlignment="Left" Height="27" Margin="129,189,0,0" VerticalAlignment="Top" Width="185"  Text="{Binding CurrentStudent.SecondName}"/>
         <GroupBox x:Name="studentInfo" Grid.ColumnSpan="2" Header="Студентска информация:" HorizontalAlignment="Left" Height="198" Margin="367,117,0,0" VerticalAlignment="Top" Width="399">
             <TextBox x:Name="specialityTxt" HorizontalAlignment="Left" Height="23" Margin="101,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141"/>
         </GroupBox>
@@ -37,10 +36,11 @@
         <TextBox x:Name="oksTxt" Height="23" Margin="443,192,160.4,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <TextBox x:Name="groupTxt" HorizontalAlignment="Left" Height="23" Margin="443,278,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" Grid.ColumnSpan="2"/>
         <TextBox x:Name="studentIdTxt" HorizontalAlignment="Left" Height="23" Margin="459,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="kursTxt" HorizontalAlignment="Left" Height="23" Margin="127.8,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Grid.Column="1"/>
-        <TextBox x:Name="statusTxt" HorizontalAlignment="Left" Height="23" Margin="443,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" TextChanged="TextBox_TextChanged_2" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="kursTxt" HorizontalAlignment="Left" Height="23" Margin="127.8,141,0,0"  VerticalAlignment="Top" Width="50" Grid.Column="1"/>
+        <ListBox x:Name="statusTxt" ItemsSource="{Binding StudStatusChoices}" HorizontalAlignment="Left" Height="23" Margin="443,220,0,0" VerticalAlignment="Top" Width="173" Grid.ColumnSpan="2" />
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="96.8,370,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="potokTxt" HorizontalAlignment="Left" Height="23" Margin="127.8,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="54" Grid.Column="1" RenderTransformOrigin="1.703,0.074"/>
+        <Button x:Name="testBtn" Content="Button" Margin="222,351,263,37" Click="testBtn_Click"/>
 
     </Grid>
 </Window>

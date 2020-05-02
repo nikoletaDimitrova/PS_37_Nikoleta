@@ -4,7 +4,7 @@ namespace UserLogin
 {
     public class User
     {
-
+        public System.Int32 UserId { get; set; }
         public String Name
         {
             get; set;
@@ -28,7 +28,7 @@ namespace UserLogin
             get; set;
         }
 
-        public DateTime ExpirationDate
+        public DateTime? ExpirationDate
         {
             get; set;
         }

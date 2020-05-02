@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
+using System.Data.SqlClient;
+using UserLogin;
 
 namespace StudentInfoSystem
 {
@@ -24,29 +27,129 @@ namespace StudentInfoSystem
         {
             InitializeComponent();
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        public MainWindow(object data) : this()
         {
-            if(textBox.Text.Length < 2)
+            MainFormVM mainFormVM = new MainFormVM();
+            mainFormVM.CurrentStudent = (Student)data;
+            Title = mainFormVM.Title;
+            FillStudStatusChoices();
+            this.DataContext = this;
+            // this.DataContext = mainFormVM;
+        }
+
+        public List<string> StudStatusChoices { get; set; }
+
+        private void ResetFields(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in MainGrid.Children)
             {
-                MessageBox.Show("Username cannot be less than 2 symbols.");
+                if (item is TextBox)
+                {
+                    TextBox textBox = (TextBox)item;
+                    textBox.Clear();
+                }
             }
-
         }
 
-        private void btnHello_Click(object sender, RoutedEventArgs e)
+        private void DisableAll(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Здрасти!!! " + textBox.Text + "Това е твоята първа програма на Visual Studio 2019!");
+            foreach (var item in MainGrid.Children)
+            {
+                if (item is TextBox)
+                {
+                    TextBox textBox = (TextBox)item;
+                    textBox.IsEnabled = false;
+                }
+            }
         }
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void EnableAll(object sender, RoutedEventArgs e)
         {
-
+            foreach (var item in MainGrid.Children)
+            {
+                if (item is TextBox)
+                {
+                    TextBox textBox = (TextBox)item;
+                    textBox.IsEnabled = true;
+                }
+            }
         }
 
-        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
+        private void FillStudStatusChoices()
         {
+            StudStatusChoices = new List<string>();
+            using (IDbConnection connection = new SqlConnection("Data Source=(local);Initial Catalog=StudentInfoDatabase;Integrated Security=True"))
+            {
 
+                string sqlquery = @"SELECT StatusDescr FROM StudStatus";
+                IDbCommand command = new SqlCommand();
+                command.Connection = connection;
+                connection.Open();
+                command.CommandText = sqlquery;
+                IDataReader reader = command.ExecuteReader();
+                bool notEndOfResult;
+                notEndOfResult = reader.Read();
+                while (notEndOfResult)
+
+                {
+                    string s = reader.GetString(0);
+                    StudStatusChoices.Add(s);
+                    notEndOfResult = reader.Read();
+                }
+            }
+        }
+
+        Boolean TestStudentsIfEmpty()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            IEnumerable<Student> queryStudents = context.Students;
+            int countStudents = queryStudents.Count();
+            if(countStudents == 0)
+            {
+                return true;
+            }
+            else { return false;}
+        }
+
+        Boolean TestUsersIfEmpty()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            IEnumerable<User> queryUsers = context.Users;
+            int countUsers = queryUsers.Count();
+            if (countUsers == 0)
+            {
+                return true;
+            }
+            else { return false; }
+        }
+
+        void CopyTestStudents()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            foreach (Student st in StudentData.TestStudents)
+            {
+                context.Students.Add(st);
+            }
+            context.SaveChanges();
+        }
+
+        void CopyTestUsers()
+        {
+            StudentInfoContext context = new StudentInfoContext();
+            foreach (User st in UserData.TestUsers)
+            {
+                context.Users.Add(st);
+            }
+            context.SaveChanges();
+        }
+
+        private void testBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Boolean result = TestStudentsIfEmpty();
+            if (TestStudentsIfEmpty())
+                CopyTestStudents();
+            MessageBox.Show(result.ToString());
         }
     }
 }
+   

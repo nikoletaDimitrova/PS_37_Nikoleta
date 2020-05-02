@@ -15,6 +15,7 @@ namespace UserLogin
 
         public delegate void ActionError(string ErrorMessage);
         private ActionError _actionError;
+        public List<User> existingUsers;
 
         public LoginValidation(string UserName, string Password, ActionError _actionError)
         {
@@ -37,6 +38,7 @@ namespace UserLogin
 
         public Boolean ValidateUserInput(User user1)
         {
+            existingUsers = UserData.TestUsers;
             if(failedLogin == 2)
             {
                 Console.WriteLine("You cannot login anymore");

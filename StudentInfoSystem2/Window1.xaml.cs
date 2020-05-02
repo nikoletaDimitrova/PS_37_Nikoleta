@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudentInfoSystem;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UserLogin;
 
 namespace StudentInfoSystem2
 {
@@ -16,36 +18,46 @@ namespace StudentInfoSystem2
     /// Interaction logic for Window1.xaml
     /// </summary>
     public partial class Window1 : Window
-    {
-        public Window1()
-        {
-            InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string userName = loginInfo.Text;
-            string pass = usernameInput.Text;
-            UserLogin.LoginValidation validation = new UserLogin.LoginValidation(userName, pass, ActionErrorLog);
-            UserLogin.User someUser = new UserLogin.User();
-            someUser.Name = userName;
-            someUser.Pass = pass;
-            if (!validation.ValidateUserInput(someUser))
+     {
+            public Window1()
             {
-                MessageBox.Show("Wrong");
+                InitializeComponent();
+            }
+            public static void ShowActionErrorMessage(string errorMsg)
+            {
+                MessageBox.Show(errorMsg);
+            }
+
+            private void logButt_Click(object sender, RoutedEventArgs e)
+            {
+                string username = loginInfo.Text;
+                string password = passwordUser.Password;
+                LoginValidation validation = new LoginValidation(username, password, ShowActionErrorMessage);
+                User user = new User();
+                if (validation.ValidateUserInput(user))
+                {
+                    try
+                    {
+                    UserLogin.User userLogin = new UserLogin.User();
+                    StudentValidation studentValidation = new StudentValidation();
+                    Student student = studentValidation.GetStudentDataByUser(userLogin);
+                        MainWindow mainWindow = new MainWindow(student);
+                        mainWindow.Show();
+                        Close();
+                    }
+                    catch
+                    {
+                        invalidCredentials();
+                    }
+                }
+            }
+            private void invalidCredentials()
+            {
+                MessageBox.Show("Invalid username or password!");
+                TextBox usernameBox = loginInfo;
+                usernameBox.Clear();
+                PasswordBox passBox = passwordUser;
+                passBox.Clear();
             }
         }
-
-        static void ActionErrorLog(string ErrorMessage)
-        {
-            Console.WriteLine("!!! " + ErrorMessage + " !!!");
-        }
-
-        private void logButt_Click(object sender, RoutedEventArgs e)
-        {
-            StudentInfoSystem.MainWindow main = new StudentInfoSystem.MainWindow();
-            main.Show();
-          
-        }
     }
-}

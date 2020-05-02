@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace UserLogin
 {
     static public class UserData
     {
+        private static UserContext context = new UserContext();
         static public List<User> TestUsers
         {
             get {
@@ -52,7 +54,7 @@ namespace UserLogin
 
         static public User IsUserPassCorrect(string UserName, string Password)
         {
-            foreach(User _searchedUser in _testUsers)
+            foreach(User _searchedUser in context.Users)
             {
                 if (UserName.Equals(_searchedUser.Name) && Password.Equals(_searchedUser.Pass)){
                     return _searchedUser;
@@ -73,6 +75,13 @@ namespace UserLogin
         {
             User existingUser = SearchByName(UserName);
             existingUser.Role = role;
+            UserContext context = new UserContext();
+            User usr =
+            (from u in TestUsers
+             where u.UserId == existingUser.UserId
+             select u).First();
+            usr.Role = role;
+            context.SaveChanges();
             Logger.LogActivity("Successful role change to " + UserName);
 
         }

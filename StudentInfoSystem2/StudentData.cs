@@ -6,13 +6,39 @@ using System.Threading.Tasks;
 
 namespace StudentInfoSystem
 {
-    class StudentData
+    static class StudentData
     {
     
-        public Student TestStudent
+        public static MainFormVM TestStudent
         {
             private set;
             get;
+        }
+
+        public static List<Student> TestStudents
+        {
+            get
+            {
+                return PopulateStudents();
+            }
+            set { }
+        }
+
+          
+        private static List<Student> PopulateStudents()
+        {
+            List<Student> students = new List<Student>();
+            Student student1 = new Student();
+            student1.FirstName = "Nikoleta";
+            student1.SecondName = "Ionkova";
+            student1.LastName = "Dimitrova";
+            students.Add(student1);
+            Student student2 = new Student();
+            student1.FirstName = "Gabriela";
+            student1.SecondName = "Ionkova";
+            student1.LastName = "Dimitrova";
+            students.Add(student2);
+            return students;
         }
     }
 }

@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace StudentInfoSystem
 {
-    class Student
+    public class Student
     {
-        public string FirstName;
-        public string SecondName;
-        public string LastName;
-        public string FacltId;
-        public string FacultetName;
-        public string Speciality;
-        public string Degree;
-        public string Status;
-        public string YearInUni;
-        public string Group;
-        public string GroupFlow;
+        public int StudentId { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+        public string LastName { get; set; }
+        public string FacltId { get; set; }
+        public string FacultetName { get; set; }
+        public string Speciality { get; set; }
+        public string Degree { get; set; }
+        public string Status { get; set; }
+        public string YearInUni { get; set; }
+        public string Group { get; set; }
+        public string GroupFlow { get; set; }
+        public byte[] Photo { get; set; }
     }
 }

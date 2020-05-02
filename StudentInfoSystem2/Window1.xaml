@@ -10,11 +10,11 @@
         <GroupBox x:Name="login" Header="Login" Margin="198,60,198,60"/>
         <Grid>
             <Label x:Name="Username" Content="Потребителско име" HorizontalAlignment="Center" Margin="0,123,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="loginInfo" HorizontalAlignment="Center" Margin="0,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+            <TextBox x:Name="loginInfo" HorizontalAlignment="Center" Margin="0,154,0,0" VerticalAlignment="Top" Width="120"/>
         </Grid>
         <Grid>
             <Label x:Name="pass" Content="Парола" HorizontalAlignment="Center" Margin="0,191,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="usernameInput" HorizontalAlignment="Left" Margin="344,222,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <PasswordBox x:Name="passwordUser" HorizontalAlignment="Left" Margin="344,222,0,0" VerticalAlignment="Top" Width="120"/>
         </Grid>
         <Button x:Name="logButt" Content="Login" HorizontalAlignment="Center" Margin="0,284,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.69,3.474" Click="logButt_Click"/>
     </Grid>
